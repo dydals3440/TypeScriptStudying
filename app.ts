@@ -1,9 +1,13 @@
 // Union Type 다양한 타입 연산 하는법
 // 처음에는 number 타입으로 계산
+type Combinable = number | string;
+type ConversionDescriptor = 'as-number' | 'as-text';
+type User = { name: string; age: number };
+
 function add(
-  n1: number | string,
-  n2: number | string,
-  resultConversion: 'as-number' | 'as-text'
+  n1: Combinable,
+  n2: Combinable,
+  resultConversion: ConversionDescriptor
 ) {
   let result;
   if (
