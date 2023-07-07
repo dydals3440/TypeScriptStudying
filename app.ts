@@ -1,37 +1,36 @@
-// Union Type 다양한 타입 연산 하는법
-// 처음에는 number 타입으로 계산
-type Combinable = number | string;
-type ConversionDescriptor = 'as-number' | 'as-text';
-type User = { name: string; age: number };
-
-function add(
-  n1: Combinable,
-  n2: Combinable,
-  resultConversion: ConversionDescriptor
-) {
-  let result;
-  if (
-    (typeof n1 === 'number' && typeof n2 === 'number') ||
-    resultConversion === 'as-number'
-  ) {
-    result = +n1 + +n2;
-  } else {
-    result = n1.toString() + n2.toString();
-  }
-  return result;
-  //   if (resultConversion === 'as-number') {
-  //     return +result;
-  //   } else {
-  //     return result.toString();
-  //   }
+function add(n1: number, n2: number) {
+  return n1 + n2;
 }
 
-// number타입 더하는 경우
-const addNumber = add(10, 20, 'as-number');
-console.log(addNumber);
+// void 타입: 의도적으로 반환문이 없다는 것을 의미
+// undefined도 타입으로 사용가능
+//  이 함수 자체는 아무것도 반환하지 않는다.
+function printResult(num: number): void {
+  console.log('Result: ' + num);
+}
 
-// string타입을 더하고 싶은경우
-const addNames = add('matthew', 'Kim', 'as-text');
-console.log(addNames);
+printResult(add(5, 12));
 
-// string 타입으로 변경할 경우
+let combineValues: (a: number, b: number) => number;
+
+combineValues = add;
+
+console.log(combineValues(8, 8)); // combineValues의 타입이 any기에 add함수가 할당되어 정상작동
+combineValues = 5;
+console.log(combineValues(8, 8)); // combineValues의 타입이 any기에 5가 할당되어 함수가 제대로 동작하지않음
+
+// 함수라고 정의해주어 해결할 수 잇다.
+let combineValues: Function;
+
+// let someValue: undefined;
+
+// // return 값 타입이 문자인 경우
+// function repeat(text: string, count: number = 1): string {
+//   let result: string = '';
+//   while (count--) {
+//     result += text;
+//   }
+//   return result;
+// }
+
+// console.log(repeat('ㅎㄷ', 2));
